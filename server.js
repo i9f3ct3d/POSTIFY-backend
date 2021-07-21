@@ -11,6 +11,17 @@ const MyPost=require("./routes/mypost");
 const PostInfo =require("./routes/postInfo");
 const likePost=require("./routes/likePost");
 const FindUsers=require('./routes/findUsers');
+const SendFriendReq=require('./routes/sendFriendReq');
+const RemoveSentFriendReq = require('./routes/removeSentFriendReq');
+const RemoveRecievedFriendReq = require('./routes/removeRecievedFriendReq');
+const AcceptFriendReq = require('./routes/acceptFriendReq');
+const RemoveFriend = require('./routes/removeFriend');
+const GetUser = require('./routes/getUser');
+const GetMyProfile = require('./routes/getMyProfile');
+const GetOnlyUserData = require('./routes/getOnlyUserData');
+const SendMessage = require('./routes/sendMessage');
+const GetMessages = require('./routes/getMessages');
+const Conversation = require('./routes/coversation');
 
 const path = require ('path');
 
@@ -35,6 +46,18 @@ app.use("/mypost",MyPost);
 app.use("/postinfo",PostInfo);
 app.use("/likepost",likePost);
 app.use("/findusers",FindUsers);
+app.use('/sendfriendreq',SendFriendReq);
+app.use('/removesentfriendreq',RemoveSentFriendReq);
+app.use('/removerecievedfriendreq',RemoveRecievedFriendReq);
+app.use('/acceptfriendreq',AcceptFriendReq);
+app.use('/removefriend',RemoveFriend);
+app.use('/getuser',GetUser);
+app.use('/getmyprofile',GetMyProfile);
+app.use('/getonlyuserdata', GetOnlyUserData);
+app.use('/sendmessage', SendMessage);
+app.use('/getmessages', GetMessages);
+app.use('/conversation', Conversation);
+
 
 const PORT=process.env.PORT||5000;
 

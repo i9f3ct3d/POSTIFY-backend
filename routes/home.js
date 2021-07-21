@@ -6,7 +6,7 @@ const jwt=require("jsonwebtoken");
 Router.get("/",async(req, res)=>
 {
     const token=req.query.token;
-    // console.log(token);
+
     if(token === undefined)
     {
         return res.status(200).json({"credentials":"not logged in"});

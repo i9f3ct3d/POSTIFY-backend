@@ -3,6 +3,8 @@ const PostModel=require("../models/postModel");
 const jwt=require("jsonwebtoken");
 const UserModel=require("../models/userModel");
 
+const upload = require('../middleware/multerMiddleWare');
+
 Router.get("/",async(req, res)=>
 {
     const token=req.query.token;
@@ -29,7 +31,7 @@ Router.get("/",async(req, res)=>
             const foundUser=await UserModel.findById(verified.userid);
             if(foundUser){
                      
-                    return res.status(200).json({"username":foundUser.username,"userid":foundUser._id});
+                    return res.status(200).json({"user":foundUser});
                 
             }
             
@@ -44,7 +46,8 @@ Router.get("/",async(req, res)=>
 })
 
 
-Router.post("/",async(req, res)=>{
+Router.post("/", upload.single('postImage') ,async(req, res)=>{
+
     const userid=req.body.userid;
     const username=req.body.username;
     const postContent=req.body.postContent;
@@ -66,7 +69,8 @@ Router.post("/",async(req, res)=>{
         postcontent:postContent,
         postTime:postTime,
         postDate:postDate,
-        authorProfilePic:postAuthor.profilePic
+        authorProfilePic:postAuthor.profilePic,
+        postImage:req.file!==undefined && req.file.path,
     })
 
     

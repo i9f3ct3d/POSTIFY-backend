@@ -10,7 +10,7 @@ const postSchema=mongoose.Schema({
     comments:Array,
     likeArray:Array,
     authorProfilePic:String,
-    isAnyImage:Boolean,
+    postImage:String,
 });
 
 module.exports=postSchema;

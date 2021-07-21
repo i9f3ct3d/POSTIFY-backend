@@ -45,6 +45,9 @@ Router.post("/", upload.single('profilePic') ,async(req, res)=>{
         password:password,
         isProfilePic:isProfilePic,
         profilePic: req.file===undefined?null:req.file.path,
+        friendReqSent:[],
+        friendReqRecieved:[],
+        friends:[]
     })
     
     newUser.save();

@@ -5,7 +5,10 @@ const userSchema=mongoose.Schema({
     email:String,
     password:String,
     isProfilePic:Boolean,
-    profilePic:String
+    profilePic:String,
+    friendReqSent:Array,
+    friendReqRecieved:Array,
+    friends:Array
 });
 
 module.exports=userSchema;

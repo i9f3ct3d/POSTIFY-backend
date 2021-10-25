@@ -1,9 +1,15 @@
 const Router=require("express").Router();
 const PostModel=require("../models/postModel");
+const UserModel = require("../models/userModel")
+const PostReactNotificationModel = require("../models/postReactNotificationModel");
 
 Router.post("/", async(req, res)=>{
-    const postid=req.body.postid;
-    const userid=req.body.userid;
+    ///// send username too ////// for faster execution /////
+
+    const postid = req.body.postid;
+    const userid = req.body.userid;
+    const username = req.body.username;
+    const userProfilePic = req.body.userProfilePic;
 
     try {
 
@@ -16,24 +22,47 @@ Router.post("/", async(req, res)=>{
         
         let flag=false;
 
-        FoundPost.likeArray.forEach(ele => {
+        FoundPost.likeArray.forEach((ele) => {
             if(ele===userid)
             {
                 flag=true;
             }
         });
 
+        let n_flag=true;
+
         if(flag)
         {
+            n_flag = false;
             FoundPost.likeArray.remove(userid);
         }
         else{
             
             FoundPost.likeArray=[...FoundPost.likeArray,userid];
+
         }
 
-        
-        FoundPost.save();
+        await FoundPost.save();
+        if(n_flag){
+
+            const foundSameNotification = await PostReactNotificationModel.findOne({postid : postid , reactorid : userid});
+            // const reactor = await UserModel.findById(userid);
+
+            if(!foundSameNotification){
+                const newNotification=new PostReactNotificationModel({
+                    type : "react",
+                    postid : postid,
+                    postOwnerid : FoundPost.userid,
+                    reactorid : userid,
+                    reactorUsername : username,
+                    reactorProfilePic : userProfilePic,
+                    isSeen : false,
+                    time : new Date()
+                })
+                await newNotification.save();
+            }
+
+        }
         return res.status(200).json(FoundPost.likeArray);
         
     } catch (error) {

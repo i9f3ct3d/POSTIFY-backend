@@ -1,5 +1,5 @@
 const PostModel = require("../models/postModel");
-
+const PostCommentNotificationModel = require("../models/postCommentNotificationModel")
 const Router=require("express").Router();
 
 Router.get("/",async(req, res)=>{
@@ -37,8 +37,22 @@ try {
     }
 
     foundPost.comments.push(newComment);
-    foundPost.save();
-    res.sendStatus(200);
+
+    const newNotification = new PostCommentNotificationModel({
+        type : "comment",
+        postid : postid,
+        postOwnerid : foundPost.userid,
+        commentorid : req.body.userid,
+        commentorUsername : username,
+        commentorProfilePic : userProfilePic,
+        isSeen : false,
+        time : new Date()
+    })
+
+    await foundPost.save();
+    await newNotification.save();
+
+    return res.sendStatus(200);
     
 } catch (error) {
     console.log(error);

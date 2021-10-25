@@ -28,6 +28,7 @@ Router.post('/',async(req , res)=>{
         const foundUser = await UserModel.findById(req.body.userId);
 
         return res.status(200).json({
+            "user":foundUser,
             "username":foundUser.username,
             "userProfilePic":foundUser.profilePic,
         })

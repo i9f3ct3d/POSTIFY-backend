@@ -61,7 +61,6 @@ Router.post("/", upload.single('postImage') ,async(req, res)=>{
     }
 
     const postAuthor=await UserModel.findById(userid);
-
     const newPost=new PostModel({
         heading:heading,
         userid:userid,
@@ -69,6 +68,8 @@ Router.post("/", upload.single('postImage') ,async(req, res)=>{
         postcontent:postContent,
         postTime:postTime,
         postDate:postDate,
+        comments : [],
+        likeArray : [],
         authorProfilePic:postAuthor.profilePic,
         postImage:req.file!==undefined && req.file.path,
     })

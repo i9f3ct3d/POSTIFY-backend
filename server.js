@@ -1,4 +1,7 @@
+require('./routes/auth')
 const express=require("express");
+const passport = require('passport')
+const session = require('express-session');
 const cors=require("cors");
 
 require("dotenv").config();
@@ -22,12 +25,24 @@ const GetOnlyUserData = require('./routes/getOnlyUserData');
 const SendMessage = require('./routes/sendMessage');
 const GetMessages = require('./routes/getMessages');
 const Conversation = require('./routes/coversation');
+const SignupUsingGoogle = require('./routes/signupUsingGoogle');
+const FetchUser = require('./routes/fetchUser');
+const GetNotifications = require('./routes/getNotifications')
+const SavePost = require('./routes/savePost')
+const GetSavgedPosts = require('./routes/getSavedPosts')
+const NotificationSeen = require('./routes/notificationSeen')
+const GetOnlineUsers = require('./routes/getOnlineUsers')
+const GetReceivedRequestUserData = require('./routes/getReceivedRequestUserData')
 
 const path = require ('path');
 
 const app=express();
 app.use(cors());
 app.use(express.json());
+app.use(session({ secret: "cats" }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 /////////monogDB/////////
 
@@ -57,6 +72,14 @@ app.use('/getonlyuserdata', GetOnlyUserData);
 app.use('/sendmessage', SendMessage);
 app.use('/getmessages', GetMessages);
 app.use('/conversation', Conversation);
+app.use('/signupusinggoogle', SignupUsingGoogle);
+app.use('/fetchuser', FetchUser);
+app.use('/getnotifications', GetNotifications);
+app.use('/savepost', SavePost);
+app.use('/getsavedposts', GetSavgedPosts);
+app.use('/notificationseen', NotificationSeen);
+app.use('/getonlineusers', GetOnlineUsers);
+app.use('/getreceivedrequestuserdata', GetReceivedRequestUserData);
 
 
 const PORT=process.env.PORT||5000;

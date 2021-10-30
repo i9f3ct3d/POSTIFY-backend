@@ -2,8 +2,8 @@ const Router=require("express").Router();
 const PostModel=require("../models/postModel");
 const jwt=require("jsonwebtoken");
 const UserModel=require("../models/userModel");
-
 const upload = require('../middleware/multerMiddleWare');
+const sharp = require('sharp');
 
 Router.get("/",async(req, res)=>
 {
@@ -75,7 +75,7 @@ Router.post("/", upload.single('postImage') ,async(req, res)=>{
     })
 
     
-    newPost.save();
+    await newPost.save();
     const JWT=jwt.sign({ userid: userid }, process.env.JWTSECRET);
     return res.status(200).json({"credentials":"valid","token":JWT})
 

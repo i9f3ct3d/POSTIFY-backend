@@ -32,7 +32,8 @@ const SavePost = require('./routes/savePost')
 const GetSavgedPosts = require('./routes/getSavedPosts')
 const NotificationSeen = require('./routes/notificationSeen')
 const GetOnlineUsers = require('./routes/getOnlineUsers')
-const GetReceivedRequestUserData = require('./routes/getReceivedRequestUserData')
+const GetReceivedRequestUserData = require('./routes/getReceivedRequestUserData');
+const GetMessagePageUserData = require('./routes/getmessagepageuserdata');
 
 const path = require ('path');
 
@@ -80,6 +81,7 @@ app.use('/getsavedposts', GetSavgedPosts);
 app.use('/notificationseen', NotificationSeen);
 app.use('/getonlineusers', GetOnlineUsers);
 app.use('/getreceivedrequestuserdata', GetReceivedRequestUserData);
+app.use('/getmessagepageuserdata', GetMessagePageUserData);
 
 
 const PORT=process.env.PORT||5000;

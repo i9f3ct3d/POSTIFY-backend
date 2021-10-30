@@ -22,12 +22,12 @@ Router.post("/", async(req, res)=>{
         
         let flag=false;
 
-        FoundPost.likeArray.forEach((ele) => {
-            if(ele===userid)
-            {
-                flag=true;
+        for await(const ele of FoundPost.likeArray){
+            if(ele === userid){
+                flag = true;
+                break;
             }
-        });
+        }
 
         let n_flag=true;
 

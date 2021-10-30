@@ -28,7 +28,15 @@ Router.post("/", upload.single('profilePic') ,async(req, res)=>{
         const hash=await bcrypt.hash(password, saltRounds);
         password=hash;
 
-        const response=await UserModel.findOne({email:email})
+        // User.exists({ _id: userID }).then(exists => {
+        //     if (exists) {
+        //       res.redirect('/dashboard')
+        //     } else {
+        //       res.redirect('/login')
+        //     }
+        //   })
+
+        const response=await UserModel.exists({email:email})
         if(response)
         {
             //when entered email already exist
@@ -47,12 +55,16 @@ Router.post("/", upload.single('profilePic') ,async(req, res)=>{
         profilePic: req.file===undefined?null:req.file.path,
         friendReqSent:[],
         friendReqRecieved:[],
-        friends:[]
+        friends:[],
+        usingGoogleAuth:false,
+        googleid : "",
+        savedPosts : [],
+        starredPosts : [],
     })
     
     newUser.save();
     const JWT=jwt.sign({ userid: newUser._id }, process.env.JWTSECRET);
-    res.status(200).json({"credentials":"valid","token":JWT});
+    return res.status(200).json({"credentials":"valid","token":JWT});
 
 })
 

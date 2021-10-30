@@ -1,6 +1,7 @@
 const express = require('express');
 const multer =require('multer');
 const { v4: uuidv4 } = require('uuid');
+const sharp = require('sharp')
 
 const MIME_TYPE={
     'image/png'  : 'png' , 
@@ -9,12 +10,15 @@ const MIME_TYPE={
 }
 
 const upload = multer({
+
     storage : multer.diskStorage({
-        destination : (req , file , cb)=>{ 
+
+        destination : (req , file , cb)=>{
             cb(null , "uploads/images/profilePics");
         },
-        filename : (req , file , cb)=>{
+        filename : async(req , file , cb)=>{
             let imgName=uuidv4() +"."+ MIME_TYPE[file.mimetype]
+
             cb(null, imgName);
         }
     }),

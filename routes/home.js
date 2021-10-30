@@ -30,10 +30,17 @@ Router.get("/",async(req, res)=>
             const foundUser=await UserModel.findById(verified.userid);
             if(foundUser){
                 
-                    const allUsers=await UserModel.find({});
+                    // const allUsers=await UserModel.find({});
                     const allPost=await PostModel.find({});
                     
-                    return res.status(200).json({"credentials":"valid","username":foundUser.username,"useremail":foundUser.email,"users":allUsers,"userid":verified.userid,"Posts":allPost,"profilePic" : foundUser.profilePic});
+                    return res.status(200).json({
+                        "credentials":"valid",
+                        "username":foundUser.username,
+                        "useremail":foundUser.email,
+                        "userid":verified.userid,
+                        "Posts":allPost,
+                        "profilePic" : foundUser.profilePic
+                    });
                 
                 
             }

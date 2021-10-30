@@ -47,8 +47,8 @@ Router.post("/" , async (req , res)=>{
                         foundUser.friendReqSent=[...foundUser.friendReqSent , friendUserId];
                         friendUser.friendReqRecieved=[...friendUser.friendReqRecieved , userId];
     
-                        foundUser.save();
-                        friendUser.save();
+                        await foundUser.save();
+                        await friendUser.save();
     
                         return res.sendStatus(200);
                     }

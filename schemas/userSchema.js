@@ -8,7 +8,11 @@ const userSchema=mongoose.Schema({
     profilePic:String,
     friendReqSent:Array,
     friendReqRecieved:Array,
-    friends:Array
+    friends:Array,
+    usingGoogleAuth : Boolean,
+    googleid : String,
+    savedPosts : Array,
+    starredPosts : Array,
 });
 
 module.exports=userSchema;

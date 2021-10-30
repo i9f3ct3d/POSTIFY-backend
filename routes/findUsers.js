@@ -28,11 +28,11 @@ Router.post("/", async(req, res)=>{
 
     if(token == undefined)
     {
-        return res.status(200).json({"status" : "not logged in"});
+        return res.status(401);
     }
     if(!token)
     {
-        return res.status(200).json({"status" : "not logged in"});
+        return res.status(404);
     }
 
     if(!searchedName)
@@ -46,7 +46,7 @@ Router.post("/", async(req, res)=>{
 
         if(!verified)
         {
-            return res.status(200).json({"credentials":"invalid"});
+            return res.status(401);
         }
 
         const searchedUsers = await UserModel.find({});
@@ -56,7 +56,7 @@ Router.post("/", async(req, res)=>{
 
     } catch (error) {
         console.log({"error":error});
-        return res.sendStatus(400);
+        return res.sendStatus(404);
     }
      
 

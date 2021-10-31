@@ -35,11 +35,8 @@ Router.get("/",async(req, res)=>
                     
                     return res.status(200).json({
                         "credentials":"valid",
-                        "username":foundUser.username,
-                        "useremail":foundUser.email,
-                        "userid":verified.userid,
+                        "user" : foundUser,
                         "Posts":allPost,
-                        "profilePic" : foundUser.profilePic
                     });
                 
                 

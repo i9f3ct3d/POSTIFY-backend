@@ -20,7 +20,12 @@ async function iterate (onlineUsersidArray , unSeenMessagesCount , viewingUserid
     const viewingUseridString = typeof(viewingUserid) != 'string' ? viewingUserid.toString() : viewingUserid;
 
     const conversationId = await ConversationModel.findOne({members:{$all :[oIdString , viewingUseridString]}});
-    const unSeenChats = await ChatModel.find({conversationId : conversationId._id , isSeen : false , recieverId : viewingUserid});
+    
+    let unSeenChats = null;
+    
+    if(conversationId){
+        unSeenChats = await ChatModel.find({conversationId : conversationId._id , isSeen : false , recieverId : viewingUserid});
+    }
     
     let countOfUnseenMessages = 0;
     

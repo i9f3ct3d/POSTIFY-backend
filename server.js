@@ -34,6 +34,7 @@ const NotificationSeen = require('./routes/notificationSeen')
 const GetOnlineUsers = require('./routes/getOnlineUsers')
 const GetReceivedRequestUserData = require('./routes/getReceivedRequestUserData');
 const GetMessagePageUserData = require('./routes/getmessagepageuserdata');
+const MessageSeen = require('./routes/messageSeen');
 
 const path = require ('path');
 
@@ -82,6 +83,7 @@ app.use('/notificationseen', NotificationSeen);
 app.use('/getonlineusers', GetOnlineUsers);
 app.use('/getreceivedrequestuserdata', GetReceivedRequestUserData);
 app.use('/getmessagepageuserdata', GetMessagePageUserData);
+app.use('/messageseen', MessageSeen);
 
 
 const PORT=process.env.PORT||5000;

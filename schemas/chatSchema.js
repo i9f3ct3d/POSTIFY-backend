@@ -6,6 +6,8 @@ const chatSchema=mongoose.Schema({
     recieverId : String,
     date : Date,
     chatContent : String,
+    isSeen : Boolean,
+    customChatid : String,
 });
 
 module.exports=chatSchema;

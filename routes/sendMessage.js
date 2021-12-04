@@ -31,15 +31,18 @@ Router.post('/',async(req , res)=>{
         const recieverId = req.body.recieverId;
         const chatContent = req.body.chatContent;
         const date = req.body.date;
+        const customChatid = req.body.customChatid;
 
 
-        const newChat =new ChatModel({
+        const newChat = new ChatModel({
 
             conversationId:conversationId,
             senderId : senderId,
             recieverId : recieverId,
             date : date,
             chatContent : chatContent,
+            isSeen : false,
+            customChatid : customChatid,
 
         });
 

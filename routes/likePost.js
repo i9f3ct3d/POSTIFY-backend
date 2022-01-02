@@ -1,6 +1,5 @@
 const Router=require("express").Router();
 const PostModel=require("../models/postModel");
-const UserModel = require("../models/userModel")
 const PostReactNotificationModel = require("../models/postReactNotificationModel");
 
 Router.post("/", async(req, res)=>{
@@ -43,7 +42,7 @@ Router.post("/", async(req, res)=>{
         }
 
         await FoundPost.save();
-        if(n_flag){
+        if(n_flag && FoundPost.userid != userid){
 
             const foundSameNotification = await PostReactNotificationModel.findOne({postid : postid , reactorid : userid});
             // const reactor = await UserModel.findById(userid);

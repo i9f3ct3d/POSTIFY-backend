@@ -24,16 +24,19 @@ Router.post("/",async(req, res)=>{
     const comment=req.body.comment;
     const userEmail=req.body.userEmail;
     const userProfilePic=req.body.userProfilePic;
+    const commentingUserId = req.body.userid;
 
 try {
     
     const foundPost=await PostModel.findById(postid);
 
     let newComment={
+
         userEmail:userEmail,
         username:username,
         commentContent:comment,
-        userProfilePic:userProfilePic
+        userProfilePic:userProfilePic,
+        commentingUserId : commentingUserId,
     }
 
     foundPost.comments.push(newComment);
@@ -42,7 +45,7 @@ try {
         type : "comment",
         postid : postid,
         postOwnerid : foundPost.userid,
-        commentorid : req.body.userid,
+        commentorid : commentingUserId,
         commentorUsername : username,
         commentorProfilePic : userProfilePic,
         isSeen : false,

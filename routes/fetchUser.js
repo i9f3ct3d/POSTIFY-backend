@@ -4,7 +4,8 @@ const jwt=require("jsonwebtoken");
 
 Router.get("/",async(req, res)=>
 {
-    
+
+        
     const token=req.query.token;
 
     if(token === undefined)
@@ -29,7 +30,8 @@ Router.get("/",async(req, res)=>
 
             const foundUser=await UserModel.findById(verified.userid);
             if(foundUser){
-            
+
+                
                 return res.status(200).json({"credentials":"valid" , "user" : foundUser});
                 
                 
@@ -40,6 +42,8 @@ Router.get("/",async(req, res)=>
 
         
     } catch (error) {
+
+        console.log({error : error});
         return res.sendStatus(404);
         
     }

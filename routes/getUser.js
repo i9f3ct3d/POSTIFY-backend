@@ -6,6 +6,8 @@ const PostModel = require('../models/postModel');
 
 Router.post("/", async (req, res) => {
 
+    console.log('coming');
+
     const token = req.query.token;
 
     if (token === undefined) {
@@ -54,8 +56,7 @@ Router.post("/", async (req, res) => {
             }
 
         }
-
-        return res.sendStatus(204);
+        else return res.sendStatus(204);
 
 
     } catch (error) {

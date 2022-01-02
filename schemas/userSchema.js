@@ -11,8 +11,8 @@ const userSchema=mongoose.Schema({
     friends:Array,
     usingGoogleAuth : Boolean,
     googleid : String,
-    savedPosts : Array,
-    starredPosts : Array,
+    savedPosts : [String],
+    starredPosts : [String],
 });
 
 module.exports=userSchema;

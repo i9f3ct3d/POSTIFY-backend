@@ -46,8 +46,7 @@ Router.post('/',async(req , res)=>{
 
         });
 
-        newChat.save();
-        
+        await newChat.save();
         return res.sendStatus(200);
         
     } catch (error) {

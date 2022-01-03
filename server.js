@@ -37,6 +37,7 @@ const GetMessagePageUserData = require('./routes/getmessagepageuserdata');
 const MessageSeen = require('./routes/messageSeen');
 const LeftNavbar = require('./routes/leftnavbar');
 const GetPaginatedPosts = require('./routes/getPaginatedPosts');
+const GetSingleOnlineUser = require('./routes/getSingleOnlineUser');
 
 const path = require ('path');
 
@@ -88,6 +89,7 @@ app.use('/getmessagepageuserdata', GetMessagePageUserData);
 app.use('/messageseen', MessageSeen);
 app.use('/leftnavbar', LeftNavbar);
 app.use('/getposts', GetPaginatedPosts);
+app.use('/getsingleonlineuser', GetSingleOnlineUser);
 
 
 const PORT=process.env.PORT||5000;

@@ -1,6 +1,5 @@
 const Router = require("express").Router();
 const ChatModel = require("../models/chatModel");
-const ConversationModel = require("../models/conversationModel");
 const UserModel = require('../models/userModel');
 
 
@@ -16,26 +15,9 @@ async function iterate (onlineUsersidArray , unSeenMessagesCount , viewingUserid
         return;
     }
     
-    const oIdString = typeof(onlineUsersidArray[i]) != 'string' ? onlineUsersidArray[i].toString() : onlineUsersidArray[i];
-    const viewingUseridString = typeof(viewingUserid) != 'string' ? viewingUserid.toString() : viewingUserid;
+   const countOfUnseenMessages = await ChatModel.countDocuments({isSeen : false , recieverId : viewingUserid , senderId : onlineUsersidArray[i]});
 
-    const conversationId = await ConversationModel.findOne({members:{$all :[oIdString , viewingUseridString]}});
-    
-    let unSeenChats = null;
-    
-    if(conversationId){
-        unSeenChats = await ChatModel.find({conversationId : conversationId._id , isSeen : false , recieverId : viewingUserid});
-    }
-    
-    let countOfUnseenMessages = 0;
-    
-    if(unSeenChats && unSeenChats.length > 0){
-
-        countOfUnseenMessages = unSeenChats.length;
-        
-    }
-    
-    await unSeenMessagesCount.push(new Array(oIdString , countOfUnseenMessages));
+    unSeenMessagesCount[onlineUsersidArray[i]] = countOfUnseenMessages;
 
     return await iterate(onlineUsersidArray , unSeenMessagesCount , viewingUserid , i + 1);
 
@@ -43,7 +25,7 @@ async function iterate (onlineUsersidArray , unSeenMessagesCount , viewingUserid
 }
 
 Router.post("/",async(req, res)=>
-{
+{   
     
     const onlineUsersidArray = req.body.onlineUsersidArray;
     const viewingUserid = req.body.viewingUserid;
@@ -51,16 +33,12 @@ Router.post("/",async(req, res)=>
     try {
 
         
-        let onlineUsersData = await UserModel.find({'_id' : { '$in' : onlineUsersidArray }});
-        let unSeenMessagesCount = await iterate(onlineUsersidArray , new Array(), viewingUserid , 0);
+        const onlineUsersData = await UserModel.find({'_id' : { '$in' : onlineUsersidArray }});
+        const unSeenMessagesCount = await iterate(onlineUsersidArray , new Map(), viewingUserid , 0);
+        // console.log(unSeenMessagesCount);
+        const result = {onlineUsersData , unSeenMessagesCount}
 
-
-            return res.status(200).json({
-                onlineUsersData : onlineUsersData,
-                unSeenMessagesCount : unSeenMessagesCount
-            });
-
-
+        return res.status(200).json(result);
         
     } catch (error) {
 

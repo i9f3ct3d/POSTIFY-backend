@@ -72,6 +72,7 @@ Router.post("/", upload.single('postImage') ,async(req, res)=>{
         likeArray : [],
         authorProfilePic:postAuthor.profilePic,
         postImage:req.file!==undefined && req.file.path,
+        postSavedBy : []
     })
 
     

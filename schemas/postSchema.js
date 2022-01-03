@@ -11,6 +11,7 @@ const postSchema=mongoose.Schema({
     likeArray:Array,
     authorProfilePic:String,
     postImage:String,
+    postSavedBy : [String]
 });
 
 module.exports=postSchema;

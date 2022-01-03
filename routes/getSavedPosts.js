@@ -1,10 +1,11 @@
 const Router=require("express").Router();
 const jwt=require("jsonwebtoken");
 const UserModel = require("../models/userModel");
+const PostModel = require('../models/postModel')
 
 Router.get("/",async(req, res)=>
 {
-    console.log("coming");
+
     const token=req.query.token;
 
     if(token === undefined)
@@ -28,12 +29,8 @@ Router.get("/",async(req, res)=>
         
         const userid = verified.userid;
         const foundUser = await UserModel.findById(userid);
+        const allSavedPosts = await PostModel.find({_id : {$in : foundUser.savedPosts}});
 
-        let allSavedPosts = [];
-
-        for await(const savedPost of foundUser.savedPosts){
-            allSavedPosts = [...allSavedPosts , savedPost];
-        }
         
 
         return res.status(200).json({

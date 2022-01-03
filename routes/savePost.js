@@ -1,11 +1,13 @@
 const Router=require("express").Router();
 const jwt=require("jsonwebtoken");
 const UserModel = require("../models/userModel");
+const PostModel  = require('../models/postModel');
 
 Router.post("/",async(req, res)=>
 {
     
     const token=req.query.token;
+    const postid = req.body.postid;
 
     if(token === undefined)
     {
@@ -32,21 +34,35 @@ Router.post("/",async(req, res)=>
         
         const userid = verified.userid;
         const foundUser = await UserModel.findById(userid);
+        const foundPost = await PostModel.findById(postid);
 
-        let flag = true;
+        if(foundUser.savedPosts.includes(userid)){
 
-        for await(eachPost of foundUser.savedPosts){
-            if(eachPost._id === req.body.post._id){
-                flag = false;
-                break;
-            }
+            return res.sendStatus(200);
+
         }
 
-        if(flag){
-            foundUser.savedPosts = [...foundUser.savedPosts , req.body.post];
+        foundPost.postSavedBy.push(userid);
+        foundUser.savedPosts = [...foundUser.savedPosts , postid];
+
+        await foundPost.save();
+        await foundUser.save();
+
+
+        // let flag = true;
+
+        // for await(eachPost of foundUser.savedPosts){
+        //     if(eachPost._id === req.body.post._id){
+        //         flag = false;
+        //         break;
+        //     }
+        // }
+
+        // if(flag){
+        //     foundUser.savedPosts = [...foundUser.savedPosts , req.body.post];
         
-            await foundUser.save();
-        }
+        //     await foundUser.save();
+        // }
 
         return res.sendStatus(200);
         

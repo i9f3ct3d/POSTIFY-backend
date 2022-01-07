@@ -25,15 +25,12 @@ Router.get('/',async(req , res)=>{
         {
             return res.sendStatus(204);
         }
-    
-        const foundUser = await UserModel.findById(verify.userid);
 
         const userPosts = await PostModel.find({
             userid : verify.userid
         });
 
         return res.status(200).json({
-            "userData" : foundUser,
             "userPosts" : userPosts
         })
         

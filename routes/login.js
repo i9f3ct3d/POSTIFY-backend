@@ -21,7 +21,7 @@ Router.post("/",async(req, res)=>{
             const validPassword = await bcrypt.compare(password, foundUser.password);
             if(validPassword){
                 const JWT=jwt.sign({ userid: foundUser._id }, process.env.JWTSECRET);
-                return res.status(200).json({"credentials":"valid","token":JWT})
+                return res.status(200).json({"credentials":"valid","token":JWT , user : foundUser})
             }
             else{
                 return res.status(200).json({"credentials":"invalid password"});

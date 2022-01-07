@@ -28,19 +28,16 @@ Router.get("/",async(req, res)=>
         }
         
         const userid = verified.userid;
-        const foundUser = await UserModel.findById(userid);
-        const allSavedPosts = await PostModel.find({_id : {$in : foundUser.savedPosts}});
-
-        
+        const savedPosts = await UserModel.findById(userid).select({'savedPosts' : 1 , '_id' : 0});
+        const allSavedPosts = await PostModel.find({_id : {$in : savedPosts.savedPosts}});
 
         return res.status(200).json({
-            "viewingUser":foundUser,
             "savedPosts" : allSavedPosts,
         });
         
     } catch (error) {
+        console.log(error);
         return res.sendStatus(404);
-        
     }
     
 })

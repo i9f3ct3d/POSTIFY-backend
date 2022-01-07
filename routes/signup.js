@@ -64,7 +64,7 @@ Router.post("/", upload.single('profilePic') ,async(req, res)=>{
     
     newUser.save();
     const JWT=jwt.sign({ userid: newUser._id }, process.env.JWTSECRET);
-    return res.status(200).json({"credentials":"valid","token":JWT});
+    return res.status(200).json({"credentials":"valid","token":JWT , user : newUser});
 
 })
 

@@ -38,6 +38,7 @@ const MessageSeen = require('./routes/messageSeen');
 const LeftNavbar = require('./routes/leftnavbar');
 const GetPaginatedPosts = require('./routes/getPaginatedPosts');
 const GetSingleOnlineUser = require('./routes/getSingleOnlineUser');
+const IsAuthenticated = require('./routes/isAuthenticated')
 
 const path = require ('path');
 
@@ -90,6 +91,7 @@ app.use('/messageseen', MessageSeen);
 app.use('/leftnavbar', LeftNavbar);
 app.use('/getposts', GetPaginatedPosts);
 app.use('/getsingleonlineuser', GetSingleOnlineUser);
+app.use('/isauthenticated', IsAuthenticated);
 
 
 const PORT=process.env.PORT||5000;
